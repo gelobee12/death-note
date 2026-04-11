@@ -2,7 +2,7 @@
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $conn = mysqli_connect("localhost", "root", "", "deathnote_db");
+    $conn = mysqli_connect("sql100.infinityfree.com", "if0_41635519", "roseneth123", "if0_41635519_deathnote_db");
 
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
@@ -45,12 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form action="signup.php" method="POST">
             <h1>Sign up</h1>
             <div class="input-box">
-                <input type="text" name="username" placeholder="username"> 
+                <input type="text" name="username" placeholder="username" required> 
                 <i class='bx  bx-user'  ></i> 
             </div>
  
             <div class="input-box">
-                <input type="password" name="password" placeholder="password" id="passinput">
+                <input type="password" name="password" required placeholder="password" id="passinput">
 
                 <div class="btneye">
 
@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <button type="submit" class="btn">Sign in</button> 
             <br>
-            <a href="loginpage.html">already have account?</a>
+            <a href="loginpage.php">already have account?</a>
             <br>
 
             <div class="social-icons">

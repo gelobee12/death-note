@@ -1,27 +1,59 @@
+<?php
+session_start();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    $conn = mysqli_connect("sql100.infinityfree.com", "if0_41635519", "roseneth123", "if0_41635519_deathnote_db");
+
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    
+    $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+    $result = mysqli_query($conn, $sql);
+
+    if (mysqli_num_rows($result) == 1) {
+        
+        $_SESSION['username'] = $username;
+        header("Location: dashb.php");
+        exit();
+    } else {
+        $error = "Invalid username or password!";
+    }
+
+    mysqli_close($conn);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desth note</title>
+    <title>Death note</title>
     <link rel="stylesheet" href="note.css">
-    <link rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
     <div class="note">
-        <form action="">
-            <h1>Log in</h1>
+        <form action="loginpage.php" method="POST" >
+            <h1>Sign in</h1>
+
+            <?php if (isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
+
             <div class="input-box">
-                <input type="text" placeholder="username" required> 
+                <input type="text" name="username" placeholder="username" required> 
                 <i class='bx  bx-user'  ></i> 
             </div>
  
             <div class="input-box">
-                <input type="password" name="password" placeholder="password" id="passinput">
+                <input type="password" name="password" placeholder="password" id="passinput" required>
 
                 <div class="btneye">
 
@@ -41,7 +73,7 @@
                 <input type="checkbox" id="remember">
 
                 </div>
-            <button type="submit" class="btn">Log in</button>  
+            <button type="submit" class="btn">Sign in</button>  
             <br>
             <a href="signin.html">create new account?</a>
             <br>
@@ -52,7 +84,6 @@
             </div>
 
         </form>
-
     </div>
 
     <script src="log.js"></script>
